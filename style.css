@@ -417,4 +417,89 @@ nav {
   .contact-details {
     text-align: left;
   }
+
+  .cursor-dot {
+    display: none;
+  }
+}
+
+/* ── CURSOR FOLLOWER ── */
+.cursor-dot {
+  position: fixed;
+  top: -10px;
+  left: -10px;
+  width: 10px;
+  height: 10px;
+  background: var(--text);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, top 0.25s ease, left 0.25s ease;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot.cursor-grow {
+  width: 36px;
+  height: 36px;
+  top: -18px;
+  left: -18px;
+  background: var(--text);
+}
+
+/* ── PROJECT IMAGE OVERLAY ── */
+.proj-img {
+  position: relative;
+}
+
+.proj-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 12, 12, 0.72);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.proj-img:hover .proj-overlay {
+  opacity: 1;
+}
+
+.overlay-title {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 300;
+  color: #F8F7F5;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  transform: translateY(12px);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overlay-meta {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(248, 247, 245, 0.6);
+  margin-top: 8px;
+  transform: translateY(12px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.04s;
+}
+
+.proj-img:hover .overlay-title,
+.proj-img:hover .overlay-meta {
+  transform: translateY(0);
+}
+
+/* ── PARALLAX: clip images so they don't overflow ── */
+.proj-img {
+  overflow: hidden;
+}
+
+.proj-img img {
+  transform-origin: center center;
+  will-change: transform;
 }
