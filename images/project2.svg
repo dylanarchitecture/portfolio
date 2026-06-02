@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
-  <rect width="1400" height="900" fill="#C4BFB8"/>
-  <line x1="700" y1="0" x2="700" y2="900" stroke="#9E9992" stroke-width="0.8"/>
-  <line x1="0" y1="450" x2="1400" y2="450" stroke="#9E9992" stroke-width="0.8"/>
-  <rect x="580" y="410" width="240" height="80" fill="none" stroke="#9E9992" stroke-width="1"/>
-  <text x="700" y="460" font-family="Georgia, serif" font-size="22" fill="#7C7770" text-anchor="middle" dominant-baseline="middle">Project 02</text>
-  <text x="700" y="490" font-family="Georgia, serif" font-size="13" fill="#9C9790" text-anchor="middle">Replace with your photo</text>
-</svg>
