@@ -313,48 +313,43 @@ nav {
 
 /* ── CONTACT ── */
 .contact {
-  padding: var(--p10) var(--p8) var(--p9);
+  padding: var(--p10) var(--p8) var(--p10);
   border-top: 0.5px solid var(--border);
   position: relative;
 }
 
-.contact-inner {
+.contact-details {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: var(--p9);
+  flex-direction: column;
+  gap: var(--p4);
 }
-
-.contact-title {
-  font-size: clamp(3rem, 6vw, 6rem);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.contact-details { text-align: right; }
 
 .contact-details a {
-  display: block;
+  display: inline-block;
   font-size: 0.85rem;
   color: var(--muted);
   text-decoration: none;
-  line-height: 2.4;
   letter-spacing: 0.04em;
   transition: color 0.2s;
+  width: fit-content;
+  border-bottom: 0.5px solid transparent;
 }
 
-.contact-details a:hover { color: var(--text); }
-
-.footer-bar {
-  padding-top: var(--p5);
-  border-top: 0.5px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.68rem;
-  color: var(--muted);
-  letter-spacing: 0.08em;
+.contact-details a:hover {
+  color: var(--text);
+  border-bottom-color: var(--text);
 }
+
+/* ── IMAGE PLACEHOLDERS ── */
+/* Remove these and use <img> tags once you have real photos */
+.img-ph {
+  width: 100%;
+  background: #C8C5BF;
+}
+
+.img-ph--hero  { height: 70vh; min-height: 320px; }
+.img-ph--proj  { height: 420px; }
+.img-ph--studio { height: 480px; }
 
 /* ── SCROLL REVEAL ── */
 .reveal {
@@ -380,24 +375,24 @@ nav {
 /* ── CURSOR ── */
 .cursor-dot {
   position: fixed;
-  top: -6px;
-  left: -6px;
-  width: 6px;
-  height: 6px;
+  top: -9px;
+  left: -9px;
+  width: 18px;
+  height: 18px;
   background: var(--text);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference;
+  mix-blend-mode: multiply;
   transition: width 0.3s ease, height 0.3s ease,
               top 0.3s ease, left 0.3s ease;
 }
 
 .cursor-dot.cursor-grow {
-  width: 40px;
-  height: 40px;
-  top: -20px;
-  left: -20px;
+  width: 52px;
+  height: 52px;
+  top: -26px;
+  left: -26px;
 }
 
 /* ── PROJECT HOVER OVERLAY ── */
@@ -485,16 +480,11 @@ nav {
 
   .about-image { display: none; }
 
-  .contact { padding: var(--p9) var(--p5) var(--p8); }
+  .contact { padding: var(--p9) var(--p5); }
 
-  .contact-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--p7);
-    margin-bottom: var(--p8);
-  }
-
-  .contact-details { text-align: left; }
+  .img-ph--hero  { height: 50vw; min-height: 240px; }
+  .img-ph--proj  { height: 280px; }
+  .img-ph--studio { height: 320px; }
 
   .cursor-dot { display: none; }
 }
