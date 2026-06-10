@@ -199,21 +199,18 @@ nav {
   margin-bottom: var(--p9);
 }
 
-/* ψ¹ ≈ 4:3  */
 .row-a {
-  grid-template-columns: 7fr 4fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--p7);
 }
 
-/* ψ² ≈ 7:4 — flipped so image sits on wider side */
 .row-b {
-  grid-template-columns: 3fr 7fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--p7);
 }
 
-/* ψ¹ ≈ 4:3 */
 .row-c {
-  grid-template-columns: 4fr 3fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--p7);
 }
 
@@ -368,7 +365,7 @@ nav {
 
 .about-image img {
   width: 100%;
-  height: 480px;
+  height: 240px;
   object-fit: cover;
   display: block;
 }
@@ -410,7 +407,7 @@ nav {
 }
 
 .img-ph--hero   { height: 70vh; min-height: 320px; }
-.img-ph--studio { height: 480px; }
+.img-ph--studio { height: 240px; }
 
 .img-ph img {
   width: 100%;
