@@ -123,6 +123,12 @@ document.querySelectorAll('.proj-hero-img').forEach(heroImg => {
         expanded.style.height = targetH + 'px';
         expanded.style.marginTop = 'var(--p2)';
       }));
+      setTimeout(() => {
+        const rect = projImg.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight * 0.8) {
+          window.scrollBy({ top: rect.bottom - window.innerHeight * 0.8, behavior: 'smooth' });
+        }
+      }, 200);
       expanded.addEventListener('transitionend', function handler(e) {
         if (e.propertyName !== 'height') return;
         if (projImg.classList.contains('expanded')) expanded.style.height = 'auto';
