@@ -196,7 +196,7 @@ nav {
 
 .project-row {
   display: grid;
-  align-items: end;
+  align-items: center;
   margin-bottom: var(--p9);
 }
 
@@ -210,7 +210,6 @@ nav {
 .row-b {
   grid-template-columns: 3fr 7fr;
   gap: var(--p7);
-  margin-top: calc(-1 * var(--p7));
 }
 
 /* ψ¹ ≈ 4:3 */
@@ -223,6 +222,17 @@ nav {
 .proj-img {
   overflow: hidden;
   position: relative;
+  opacity: 0;
+  transition: opacity 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.proj-img.from-left  { transform: translateX(-64px); }
+.proj-img.from-right { transform: translateX(64px); }
+
+.proj-img.in-view {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .proj-img img {
@@ -230,19 +240,22 @@ nav {
   height: 420px;
   object-fit: cover;
   display: block;
-  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: center center;
-  will-change: transform;
 }
 
 /* ── PROJECT INFO ── */
-.proj-num {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  margin-bottom: var(--p3);
+.proj-info {
+
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.8s ease 0.22s, transform 0.8s ease 0.22s;
 }
 
+.proj-info.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── PROJECT INFO ── */
 .proj-title {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: 300;
@@ -348,7 +361,6 @@ nav {
 }
 
 .img-ph--hero   { height: 70vh; min-height: 320px; }
-.img-ph--proj   { height: 420px; }
 .img-ph--studio { height: 480px; }
 
 .img-ph img {
@@ -356,6 +368,11 @@ nav {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.img-ph--proj img {
+  height: auto;
+  object-fit: initial;
 }
 
 /* ── SCROLL REVEAL ── */
@@ -368,6 +385,13 @@ nav {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Project rows use per-element animation — bypass generic reveal */
+.project-row.reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 /* ── ANIMATIONS ── */
@@ -474,7 +498,8 @@ nav {
   .row-b .proj-info { order: 2; }
   .row-b .proj-img  { order: 1; }
 
-  .proj-img img { height: 280px; }
+  .proj-img.from-left,
+  .proj-img.from-right { transform: translateY(32px); }
 
   .about {
     padding: var(--p9) var(--p5);
@@ -490,7 +515,6 @@ nav {
   .contact { padding: var(--p9) var(--p5); }
 
   .img-ph--hero  { height: 50vw; min-height: 240px; }
-  .img-ph--proj  { height: 280px; }
   .img-ph--studio { height: 320px; }
 
   .cursor-dot { display: none; }

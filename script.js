@@ -30,6 +30,7 @@ function drawProportionalLines() {
 
 drawProportionalLines();
 window.addEventListener('resize', drawProportionalLines);
+window.addEventListener('load', drawProportionalLines);
 
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────────────────
@@ -53,16 +54,31 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 
-// ── IMAGE PARALLAX ────────────────────────────────────────────────────────
-function updateParallax() {
-  document.querySelectorAll('.proj-img img').forEach(img => {
-    const rect = img.closest('.proj-img').getBoundingClientRect();
-    const centre = rect.top + rect.height / 2 - window.innerHeight / 2;
-    img.style.transform = `translateY(${centre * 0.07}px) scale(1.12)`;
-  });
+// ── SHUFFLE PROJECTS ──────────────────────────────────────────────────────
+const workSection = document.querySelector('.work');
+const projectRows = Array.from(workSection.querySelectorAll('.project-row'));
+for (let i = projectRows.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [projectRows[i], projectRows[j]] = [projectRows[j], projectRows[i]];
 }
-window.addEventListener('scroll', updateParallax, { passive: true });
-updateParallax();
+projectRows.forEach(row => workSection.appendChild(row));
+
+
+// ── IMAGE SLIDE-IN ────────────────────────────────────────────────────────
+document.querySelectorAll('.project-row').forEach((row, i) => {
+  const img = row.querySelector('.proj-img');
+  if (img) img.classList.add(i % 2 === 0 ? 'from-left' : 'from-right');
+});
+
+const slideObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    entry.target.classList.toggle('in-view', entry.isIntersecting);
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.proj-img, .proj-info').forEach(el => {
+  slideObserver.observe(el);
+});
 
 
 // ── PROJECT HOVER OVERLAY ─────────────────────────────────────────────────
@@ -74,9 +90,7 @@ document.querySelectorAll('.project-row').forEach(row => {
 
   const overlay = document.createElement('div');
   overlay.className = 'proj-overlay';
-  overlay.innerHTML =
-    `<span class="overlay-title">${title}</span>` +
-    `<span class="overlay-meta">${meta}</span>`;
+  overlay.innerHTML = `<span class="overlay-title">${title}</span>`;
   imgWrap.appendChild(overlay);
 });
 
@@ -103,14 +117,3 @@ document.querySelectorAll('a, .proj-img').forEach(el => {
 });
 
 
-// ── PROJECT NUMBER FADE IN ────────────────────────────────────────────────
-const numObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.style.opacity = '1';
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('.proj-num').forEach(el => {
-  el.style.cssText += 'opacity:0; transition: opacity 0.6s ease;';
-  numObserver.observe(el);
-});
