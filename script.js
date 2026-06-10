@@ -83,15 +83,85 @@ document.querySelectorAll('.proj-img, .proj-info').forEach(el => {
 
 // ── PROJECT HOVER OVERLAY ─────────────────────────────────────────────────
 document.querySelectorAll('.project-row').forEach(row => {
-  const imgWrap = row.querySelector('.proj-img');
-  if (!imgWrap) return;
+  const heroImg = row.querySelector('.proj-hero-img');
+  if (!heroImg) return;
   const title = row.querySelector('.proj-title')?.textContent || '';
-  const meta  = row.querySelector('.proj-meta')?.textContent.split('\n')[0] || '';
 
   const overlay = document.createElement('div');
   overlay.className = 'proj-overlay';
   overlay.innerHTML = `<span class="overlay-title">${title}</span>`;
-  imgWrap.appendChild(overlay);
+  heroImg.appendChild(overlay);
+});
+
+
+// ── EXPAND / COLLAPSE PROJECT IMAGES ──────────────────────────────────────
+document.querySelectorAll('.proj-hero-img').forEach(heroImg => {
+  heroImg.addEventListener('click', () => {
+    const projImg = heroImg.closest('.proj-img');
+    const expanded = projImg.querySelector('.proj-images-expanded');
+    if (!expanded) return;
+
+    if (projImg.classList.contains('expanded')) {
+      const h = expanded.scrollHeight;
+      expanded.style.height = h + 'px';
+      expanded.style.transition = 'height 0.55s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.55s ease';
+      expanded.style.marginTop = '0';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        expanded.style.height = '0';
+      }));
+      projImg.classList.remove('expanded');
+    } else {
+      projImg.classList.add('expanded');
+      expanded.style.transition = 'none';
+      expanded.style.height = 'auto';
+      expanded.style.marginTop = 'var(--p2)';
+      const targetH = expanded.scrollHeight;
+      expanded.style.height = '0';
+      expanded.style.marginTop = '0';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        expanded.style.transition = 'height 0.55s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.55s ease';
+        expanded.style.height = targetH + 'px';
+        expanded.style.marginTop = 'var(--p2)';
+      }));
+      expanded.addEventListener('transitionend', function handler(e) {
+        if (e.propertyName !== 'height') return;
+        if (projImg.classList.contains('expanded')) expanded.style.height = 'auto';
+        expanded.removeEventListener('transitionend', handler);
+      });
+    }
+  });
+});
+
+
+// ── LIGHTBOX ──────────────────────────────────────────────────────────────
+const lightbox = document.createElement('div');
+lightbox.className = 'lightbox';
+lightbox.innerHTML = '<button class="lightbox-close" aria-label="Close">&#215;</button><div class="lightbox-img-wrap"><img src="" alt=""></div>';
+document.body.appendChild(lightbox);
+
+const lbImg = lightbox.querySelector('img');
+
+function openLightbox(src, alt) {
+  lbImg.src = src;
+  lbImg.alt = alt || '';
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+document.querySelectorAll('.proj-images-expanded img').forEach(img => {
+  img.addEventListener('click', e => {
+    e.stopPropagation();
+    openLightbox(img.src, img.alt);
+  });
 });
 
 
