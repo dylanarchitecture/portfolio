@@ -111,10 +111,7 @@ document.querySelectorAll('.proj-hero-img').forEach(heroImg => {
         projImg.classList.add('animated');
       }));
       setTimeout(() => {
-        const rect = projImg.getBoundingClientRect();
-        if (rect.bottom > window.innerHeight * 0.8) {
-          window.scrollBy({ top: rect.bottom - window.innerHeight * 0.8, behavior: 'smooth' });
-        }
+        window.scrollBy({ top: 100, behavior: 'smooth' });
       }, 300);
     }
   });
