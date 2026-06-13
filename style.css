@@ -38,6 +38,9 @@
 
 html { scroll-behavior: smooth; }
 
+/* Suppress browser's default hand cursor everywhere — custom cursor handles it */
+a, button { cursor: none; }
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -233,9 +236,10 @@ nav {
 /* ── PROJECT HERO IMAGE ── */
 .proj-hero-img {
   position: relative;
-  cursor: pointer;
+  cursor: none;
   height: 220px;
   background: var(--bg);
+  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ── PROJECT IMAGES EXPANDED ── */
@@ -272,27 +276,25 @@ nav {
 
 .proj-images-expanded .img-ph--proj {
   overflow: hidden;
-  cursor: pointer;
+  cursor: none;
   background: none;
   height: 240px;
-  opacity: 0;
-  transform: translateY(20px) scale(0.96);
-  transition: opacity 0.48s ease, transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Animated class (added via double-RAF) triggers the transition */
+/* Animated class (added via double-RAF) reveals images top-to-bottom */
 .proj-img.expanded.animated .proj-images-expanded .img-ph--proj {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+  clip-path: inset(0 0 0% 0);
 }
 
-.proj-images-expanded .img-ph--proj:nth-child(1) { transition-delay: 0.05s; }
-.proj-images-expanded .img-ph--proj:nth-child(2) { transition-delay: 0.10s; }
-.proj-images-expanded .img-ph--proj:nth-child(3) { transition-delay: 0.15s; }
-.proj-images-expanded .img-ph--proj:nth-child(4) { transition-delay: 0.20s; }
-.proj-images-expanded .img-ph--proj:nth-child(5) { transition-delay: 0.25s; }
-.proj-images-expanded .img-ph--proj:nth-child(6) { transition-delay: 0.30s; }
-.proj-images-expanded .img-ph--proj:nth-child(7) { transition-delay: 0.35s; }
+.proj-images-expanded .img-ph--proj:nth-child(1) { transition-delay: 0.04s; }
+.proj-images-expanded .img-ph--proj:nth-child(2) { transition-delay: 0.12s; }
+.proj-images-expanded .img-ph--proj:nth-child(3) { transition-delay: 0.20s; }
+.proj-images-expanded .img-ph--proj:nth-child(4) { transition-delay: 0.28s; }
+.proj-images-expanded .img-ph--proj:nth-child(5) { transition-delay: 0.36s; }
+.proj-images-expanded .img-ph--proj:nth-child(6) { transition-delay: 0.44s; }
+.proj-images-expanded .img-ph--proj:nth-child(7) { transition-delay: 0.52s; }
 
 .proj-images-expanded .img-ph--proj img {
   width: 100%;
@@ -379,8 +381,6 @@ nav {
 
 .about-image img {
   width: 100%;
-  height: 240px;
-  object-fit: cover;
   display: block;
 }
 
@@ -421,7 +421,7 @@ nav {
 }
 
 .img-ph--hero   { height: 70vh; min-height: 320px; }
-.img-ph--studio { height: 240px; }
+.img-ph--studio { height: auto; }
 
 .img-ph img {
   width: 100%;
@@ -436,6 +436,12 @@ nav {
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+/* About image: natural proportions, no forced height or crop */
+.about-image .img-ph img {
+  height: auto;
+  object-fit: initial;
 }
 
 
