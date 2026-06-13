@@ -98,42 +98,24 @@ document.querySelectorAll('.project-row').forEach(row => {
 document.querySelectorAll('.proj-hero-img').forEach(heroImg => {
   heroImg.addEventListener('click', () => {
     const projImg = heroImg.closest('.proj-img');
-    const expanded = projImg.querySelector('.proj-images-expanded');
-    if (!expanded) return;
+    if (!projImg.querySelector('.proj-images-expanded')) return;
 
     if (projImg.classList.contains('expanded')) {
-      const h = expanded.scrollHeight;
-      expanded.style.height = h + 'px';
-      expanded.style.transition = 'height 0.55s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.55s ease';
-      expanded.style.marginTop = '0';
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        expanded.style.height = '0';
-      }));
-      projImg.classList.remove('expanded');
+      // Fade images out first, then collapse the grid layout
+      projImg.classList.remove('animated');
+      setTimeout(() => projImg.classList.remove('expanded'), 420);
     } else {
+      // Switch to grid layout, then trigger cascading fade-in via double RAF
       projImg.classList.add('expanded');
-      expanded.style.transition = 'none';
-      expanded.style.height = 'auto';
-      expanded.style.marginTop = 'var(--p2)';
-      const targetH = expanded.scrollHeight;
-      expanded.style.height = '0';
-      expanded.style.marginTop = '0';
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        expanded.style.transition = 'height 0.55s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.55s ease';
-        expanded.style.height = targetH + 'px';
-        expanded.style.marginTop = 'var(--p2)';
+        projImg.classList.add('animated');
       }));
       setTimeout(() => {
         const rect = projImg.getBoundingClientRect();
         if (rect.bottom > window.innerHeight * 0.8) {
           window.scrollBy({ top: rect.bottom - window.innerHeight * 0.8, behavior: 'smooth' });
         }
-      }, 200);
-      expanded.addEventListener('transitionend', function handler(e) {
-        if (e.propertyName !== 'height') return;
-        if (projImg.classList.contains('expanded')) expanded.style.height = 'auto';
-        expanded.removeEventListener('transitionend', handler);
-      });
+      }, 300);
     }
   });
 });
