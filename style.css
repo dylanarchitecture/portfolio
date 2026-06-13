@@ -245,17 +245,24 @@ nav {
   display: none;
 }
 
-/* Expanded: proj-img becomes unified 2-col gallery grid */
+/* Project row goes full-width when a gallery is open */
+.project-row.row-expanded {
+  grid-template-columns: 1fr;
+}
+
+/* Expanded: plastic-number column ratios ψ²:ψ:1 ≈ 1.75:1.32:1 */
 .proj-img.expanded {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--p2);
+  grid-template-columns: 1.75fr 1.32fr 1fr;
+  column-gap: var(--p3);
+  row-gap: var(--p4);
   align-items: start;
 }
 
-/* Hero spans full top row */
+/* Hero spans the full top row */
 .proj-img.expanded .proj-hero-img {
   grid-column: 1 / -1;
+  height: 300px;
 }
 
 /* Expanded children flow directly into the parent grid */
@@ -267,7 +274,7 @@ nav {
   overflow: hidden;
   cursor: pointer;
   background: none;
-  height: 200px;
+  height: 240px;
   opacity: 0;
   transform: translateY(20px) scale(0.96);
   transition: opacity 0.48s ease, transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
@@ -294,10 +301,6 @@ nav {
   display: block;
 }
 
-/* Lone last image spans full width */
-.proj-images-expanded .img-ph--proj:last-child:nth-child(odd) {
-  grid-column: span 2;
-}
 
 /* ── PROJECT INFO ── */
 .proj-info {
@@ -485,49 +488,6 @@ nav {
   height: 52px;
   top: -26px;
   left: -26px;
-}
-
-/* ── PROJECT HOVER OVERLAY ── */
-.proj-overlay {
-  position: absolute;
-  inset: 0;
-  background: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: var(--p6);
-  opacity: 0;
-  transition: opacity 0.45s ease;
-  pointer-events: none;
-}
-
-.proj-hero-img:hover .proj-overlay { opacity: 1; }
-
-.overlay-title {
-  font-family: var(--serif);
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-  font-weight: 300;
-  color: #F8F7F5;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  transform: translateY(var(--p3));
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  text-shadow: 0 1px 12px rgba(0,0,0,0.5);
-}
-
-.overlay-meta {
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(248, 247, 245, 0.55);
-  margin-top: var(--p2);
-  transform: translateY(var(--p3));
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.04s;
-}
-
-.proj-hero-img:hover .overlay-title,
-.proj-hero-img:hover .overlay-meta {
-  transform: translateY(0);
 }
 
 /* ── LIGHTBOX ── */

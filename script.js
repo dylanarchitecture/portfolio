@@ -81,17 +81,6 @@ document.querySelectorAll('.proj-img, .proj-info').forEach(el => {
 });
 
 
-// ── PROJECT HOVER OVERLAY ─────────────────────────────────────────────────
-document.querySelectorAll('.project-row').forEach(row => {
-  const heroImg = row.querySelector('.proj-hero-img');
-  if (!heroImg) return;
-  const title = row.querySelector('.proj-title')?.textContent || '';
-
-  const overlay = document.createElement('div');
-  overlay.className = 'proj-overlay';
-  overlay.innerHTML = `<span class="overlay-title">${title}</span>`;
-  heroImg.appendChild(overlay);
-});
 
 
 // ── EXPAND / COLLAPSE PROJECT IMAGES ──────────────────────────────────────
@@ -100,12 +89,16 @@ document.querySelectorAll('.proj-hero-img').forEach(heroImg => {
     const projImg = heroImg.closest('.proj-img');
     if (!projImg.querySelector('.proj-images-expanded')) return;
 
+    const row = projImg.closest('.project-row');
+
     if (projImg.classList.contains('expanded')) {
-      // Fade images out first, then collapse the grid layout
       projImg.classList.remove('animated');
-      setTimeout(() => projImg.classList.remove('expanded'), 420);
+      setTimeout(() => {
+        projImg.classList.remove('expanded');
+        row.classList.remove('row-expanded');
+      }, 420);
     } else {
-      // Switch to grid layout, then trigger cascading fade-in via double RAF
+      row.classList.add('row-expanded');
       projImg.classList.add('expanded');
       requestAnimationFrame(() => requestAnimationFrame(() => {
         projImg.classList.add('animated');
