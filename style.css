@@ -48,6 +48,8 @@ body {
 
 .serif { font-family: var(--serif); }
 
+img { max-width: 100%; }
+
 /* ── VIEW TRANSITIONS ── */
 @view-transition { navigation: auto; }
 
@@ -281,17 +283,16 @@ nav {
 .entry-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: var(--border);
+  background: var(--bg);
 }
 
 .entry-poster {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 80vh;
+  margin: 0 auto;
   transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.5s ease;
 }
@@ -393,6 +394,8 @@ nav {
   object-fit: initial;
 }
 
+.about-image-secondary { margin-top: var(--p5); }
+
 /* ── PROJECT PAGE ── */
 .project-page-body {
   padding-top: 0;
@@ -425,6 +428,18 @@ nav {
 }
 
 .project-hero-media video.loaded { opacity: 1; }
+
+/* Drawing heroes — letterbox instead of a severe full-bleed crop */
+.project-hero--contain { background: #FFFFFF; }
+
+.project-hero--contain .project-hero-media img,
+.project-hero--contain .project-hero-media video {
+  object-fit: contain;
+}
+
+.project-hero--contain .project-hero-overlay { display: none; }
+
+.project-hero--contain .project-hero-title { color: var(--text); }
 
 .project-hero-overlay {
   position: absolute;
@@ -525,7 +540,9 @@ nav {
 }
 
 .project-figure img {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -548,6 +565,9 @@ nav {
   grid-template-columns: 1.75fr 1.32fr 1fr;
   gap: var(--p4);
 }
+
+/* Low-resolution figures — constrained so they never upscale past native size */
+.figure-small { max-width: 420px; }
 
 /* ── PROJECT NAV ── */
 .project-nav {
