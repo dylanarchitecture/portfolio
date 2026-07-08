@@ -389,12 +389,14 @@ nav {
   display: block;
 }
 
+.about-image {
+  max-width: 85%;
+}
+
 .about-image .img-ph img {
   height: auto;
   object-fit: initial;
 }
-
-.about-image-secondary { margin-top: var(--p5); }
 
 /* ── PROJECT PAGE ── */
 .project-page-body {
